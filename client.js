@@ -14,6 +14,6 @@ swarm.join(topic, {
   announce: false
 });
 
-swarm.on("connection", socket => {
+swarm.once("connection", socket => {
   createRequest(socket);
 });
