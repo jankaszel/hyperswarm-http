@@ -1,6 +1,6 @@
 const hyperswarm = require("hyperswarm");
 const crypto = require("crypto");
-const { parseRequest } = require("./http-request.js");
+const { parseRequest } = require("./lib/http-request.js");
 
 const swarm = hyperswarm();
 
@@ -10,11 +10,16 @@ const topic = crypto
   .digest();
 
 swarm.join(topic, {
-  lookup: true,
+  lookup: false,
   announce: true
 });
 
+console.log(`Joined network: ${topic.toString("hex")}`);
+
+swarm.on("peer", (peer) => console.log("new peer", peer));
+
 swarm.on("connection", socket => {
+  console.log("got a client connection");
   const parser = parseRequest(socket);
 
   parser.on("request", (req, res) => {

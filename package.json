@@ -1,15 +1,24 @@
 {
-  "name": "hyperswarm-express",
+  "name": "hyperswarm-http",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
+  "private": true,
   "scripts": {
+    "build": "browserify app/index.js -o app/bundle.js",
+    "dev": "watchify app/index.js -o app/bundle.js & serve -l 3000 ./app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Jan Kaßel (@falafeljan)",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
-    "hyperswarm": "^2.2.0"
+    "@geut/discovery-swarm-webrtc": "^2.2.4",
+    "browserify": "^16.5.0",
+    "events": "^3.0.0",
+    "hyperswarm": "^2.2.0",
+    "hyperswarm-proxy": "^1.0.0",
+    "serve": "^11.2.0",
+    "watchify": "^3.11.1",
+    "wrtc": "^0.4.2"
   }
 }

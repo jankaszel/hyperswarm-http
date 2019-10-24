@@ -1,6 +1,6 @@
 const hyperswarm = require("hyperswarm");
 const crypto = require("crypto");
-const { createRequest } = require("./http-request");
+const { createRequest } = require("./lib/http-request");
 
 const swarm = hyperswarm();
 
