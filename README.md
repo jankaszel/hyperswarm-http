@@ -12,3 +12,9 @@ This project aims to test Hyperswarm with simple HTTP requests, and ultimately p
 2. `node client.js` Start a ‘requesting’ peer (sending HTTP requests and receiving responses, connecting to the server).
 3. `node proxy.js` Start a proxy that relays Hyperswarm protocol messages from a WebRTC stream into the Hyperswarm network.
 4. `npm run dev` Set your browser to `http://localhost:3000/`. The client will connect to the server via the WebRTC-Hyperswarm-proxy.
+
+## Related Work
+
+- Maymounkov, P., & Mazières, D. (2002). Kademlia: A Peer-to-Peer Information System Based on the XOR Metric. In Peer-to-Peer Systems (pp. 53–65). Springer Berlin Heidelberg. https://doi.org/10.1007/3-540-45748-8_5
+- Kleppmann, M., Wiggins, A., van Hardenberg, P., & McGranaghan, M. (2019). Local-first software: you own your data, in spite of the cloud. In Proceedings of the 2019 ACM SIGPLAN International Symposium on New Ideas, New Paradigms, and Reflections on Programming and Software - Onward! 2019. ACM Press. https://doi.org/10.1145/3359591.3359737
+- Frazee, P. (2018). Announcing Hyperswarm. [online] pfrazee.hashbase.io. Available at: https://pfrazee.hashbase.io/blog/hyperswarm [Accessed 24 Oct. 2019].
