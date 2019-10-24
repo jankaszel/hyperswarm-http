@@ -16,9 +16,9 @@ function createRequest(socket) {
 
 async function initiateHyperswarmClient(peer) {
   const swarm = new HyperswarmProxyClient({
-    connection: peer, // Pass in the stream which connects to the server
-    autoconnect: true, // Whether you should autoconnect to peers
-    maxPeers: 24 // The max number of peers to connect to before stopping to autoconnect
+    connection: peer,
+    autoconnect: true,
+    maxPeers: 24
   });
 
   const topic = crypto
@@ -29,7 +29,7 @@ async function initiateHyperswarmClient(peer) {
   swarm.join(topic);
   console.log(`Joined swarm: ${topic.toString("hex")}`);
 
-  swarm.once("connection", (socket, info) => {
+  swarm.once("connection", socket => {
     createRequest(socket);
   });
 }
@@ -54,4 +54,4 @@ async function main() {
   });
 }
 
-main()
+main();

@@ -16,10 +16,8 @@ swarm.join(topic, {
 
 console.log(`Joined network: ${topic.toString("hex")}`);
 
-swarm.on("peer", (peer) => console.log("new peer", peer));
-
 swarm.on("connection", socket => {
-  console.log("got a client connection");
+  console.log("Established a new Hyperswarm client connection.");
   const parser = parseRequest(socket);
 
   parser.on("request", (req, res) => {
