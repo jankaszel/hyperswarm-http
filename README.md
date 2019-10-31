@@ -4,7 +4,7 @@
 
 For my thesis work ([code](https://github.com/falafeljan/from-me-to-you), [blog](https://kassel.works/thesis)), I intend to overcome current issues that CRDTs like [Automerge](https://github.com/automerge/automerge) have with browser technology by using W3C standards, but in a decentralized manner. While browser APIs don't allow access to files or low-level networking (like UDP sockets), using web standards like [Linked Web Annotations](https://www.w3.org/TR/annotation-model/) allows to work with a broadly-supported technology stack.
 
-This project aims to test Hyperswarm with simple HTTP requests, and ultimately provide simple library functions for web clients and "servers" (natively running applications) alike.
+This project aims to test Hyperswarm with simple HTTP requests, and ultimately provide simple library functions for web clients and "servers" (natively running applications) alike. Originally, WebRTC was inteded to create _'decentralized'_ gateway bridges (via [`@geut/discovery-swarm-webrtc`](https://github.com/geut/discovery-swarm-webrtc)), but WebRTC didn't work well in our tests. Hence, we switched over to fixed-host gateways using WebSockets (via [`websocket-stream`](https://github.com/maxogden/websocket-stream))
 
 ## Running the Experiment
 
