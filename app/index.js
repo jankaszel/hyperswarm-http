@@ -18,20 +18,17 @@ async function main() {
     .update("hyperswarm-http-test")
     .digest();
 
-  const swarm = new BrowserSwarm(Buffer.from(channelName));
+  const swarm = new BrowserSwarm("ws://localhost:4200");
   swarm.on("error", console.error);
-  swarm.on("ready", () => {
-    swarm.join(topic);
-    console.log(`joined swarm: ${topic.toString("hex")}`);
+  swarm.join(topic);
 
-    swarm.once("connection", socket => {
-      createRequest(
-        socket,
-        `GET / HTTP/1.0
+  swarm.once("connection", socket => {
+    createRequest(
+      socket,
+      `GET / HTTP/1.0
 
 `
-      );
-    });
+    );
   });
 }
 

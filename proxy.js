@@ -1,36 +1,22 @@
-const wrtc = require("wrtc");
-const createWebRTCSwarm = require("@geut/discovery-swarm-webrtc");
+const http = require("http");
+const websocket = require("websocket-stream");
 const HyperswarmProxyServer = require("hyperswarm-proxy/server");
+const debug = require("debug")("hyperswarm-websocket-gateway");
 
-const channelId = Buffer.from("super-foobar-exciting-thing");
+const port =
+  process.argv.length > 2 ? Number.parseInt(process.argv[2], 10) : 4200;
 
-const webRTCSwarm = createWebRTCSwarm({
-  bootstrap: ["https://geut-webrtc-signal.herokuapp.com/"],
-  simplePeer: { wrtc }
-});
+async function main() {
+  const server = http.createServer();
+  server.listen(port);
+  debug(`http server listening on port ${port}`);
 
-webRTCSwarm.join(channelId);
-console.log(
-  "Joined WebRTC swarm:",
-  channelId.toString(),
-  channelId.toString("hex")
-);
+  const proxyServer = new HyperswarmProxyServer({ ephemeral: false });
+  const wss = websocket.createServer({ server }, handle);
 
-const server = new HyperswarmProxyServer({ ephemeral: false });
+  function handle(stream) {
+    proxyServer.handleStream(stream);
+  }
+}
 
-webRTCSwarm.on("connection", peer => {
-  console.log("Connected to a new WebRTC peer.");
-  server.handleStream(peer);
-});
-
-process.on("SIGINT", () => {
-  webRTCSwarm.close(() => {
-    console.log("WebRTC swarm closed.");
-  });
-
-  server.destroy(() => {
-    console.log("Server destroyed.");
-  });
-
-  process.exit(0);
-});
+main();
