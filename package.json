@@ -14,6 +14,7 @@
   "dependencies": {
     "@geut/discovery-swarm-webrtc": "^2.2.4",
     "browserify": "^16.5.0",
+    "debug": "^4.1.1",
     "events": "^3.0.0",
     "hyperswarm": "^2.2.0",
     "hyperswarm-proxy": "^1.0.0",

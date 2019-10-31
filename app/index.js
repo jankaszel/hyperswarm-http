@@ -1,56 +1,37 @@
 const crypto = require("crypto");
-const HyperswarmProxyClient = require("hyperswarm-proxy/client");
-const createWebRTCSwarm = require("@geut/discovery-swarm-webrtc");
+const { BrowserSwarm } = require("../lib/browser-swarm");
 
 const channelName = "super-foobar-exciting-thing";
 
-function createRequest(socket) {
-  socket.write(`GET / HTTP/1.0
-
-`);
+function createRequest(socket, message) {
+  socket.write(message);
 
   socket.on("data", data => {
     console.log("Received " + data.length + " bytes\n" + data);
   });
+  socket.on("end", () => socket.destroy());
 }
 
-async function initiateHyperswarmClient(peer) {
-  const swarm = new HyperswarmProxyClient({
-    connection: peer,
-    autoconnect: true,
-    maxPeers: 24
-  });
-
+async function main() {
   const topic = crypto
     .createHash("sha256")
     .update("hyperswarm-http-test")
     .digest();
 
-  swarm.join(topic);
-  console.log(`Joined swarm: ${topic.toString("hex")}`);
+  const swarm = new BrowserSwarm(Buffer.from(channelName));
+  swarm.on("error", console.error);
+  swarm.on("ready", () => {
+    swarm.join(topic);
+    console.log(`joined swarm: ${topic.toString("hex")}`);
 
-  swarm.once("connection", socket => {
-    createRequest(socket);
-  });
-}
+    swarm.once("connection", socket => {
+      createRequest(
+        socket,
+        `GET / HTTP/1.0
 
-async function main() {
-  const swarmOpts = {
-    bootstrap: ["https://geut-webrtc-signal.herokuapp.com/"]
-  };
-
-  const webRTCSwarm = createWebRTCSwarm(swarmOpts);
-
-  webRTCSwarm.join(Buffer.from(channelName));
-  console.log(
-    "Joined WebRTC swarm:",
-    channelName,
-    Buffer.from(channelName).toString("hex")
-  );
-
-  webRTCSwarm.on("connection", async peer => {
-    console.log("Connected to a new WebRTC peer");
-    await initiateHyperswarmClient(peer);
+`
+      );
+    });
   });
 }
 
