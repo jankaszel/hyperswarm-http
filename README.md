@@ -4,14 +4,14 @@
 
 For my thesis work ([code](https://github.com/falafeljan/from-me-to-you), [blog](https://kassel.works/thesis)), I intend to overcome current issues that CRDTs like [Automerge](https://github.com/automerge/automerge) have with browser technology by using W3C standards, but in a decentralized manner. While browser APIs don't allow access to files or low-level networking (like UDP sockets), using web standards like [Linked Web Annotations](https://www.w3.org/TR/annotation-model/) allows to work with a broadly-supported technology stack.
 
-This project aims to test Hyperswarm with simple HTTP requests, and ultimately provide simple library functions for web clients and "servers" (natively running applications) alike. Originally, WebRTC was inteded to create _'decentralized'_ gateway bridges (via [`@geut/discovery-swarm-webrtc`](https://github.com/geut/discovery-swarm-webrtc)), but WebRTC didn't work well in our tests. Hence, we switched over to fixed-host gateways using WebSockets (via [`websocket-stream`](https://github.com/maxogden/websocket-stream))
+This project aims to test Hyperswarm with simple HTTP requests, and ultimately provide simple library functions for web clients and "servers" (natively running applications) alike. Originally, WebRTC was inteded to create _'decentralized'_ gateway bridges (via [`@geut/discovery-swarm-webrtc`](https://github.com/geut/discovery-swarm-webrtc)), but WebRTC didn't work well in our tests. Hence, we switched over to fixed-host gateways using WebSockets (via [`websocket-stream`](https://github.com/maxogden/websocket-stream)).
 
 ## Running the Experiment
 
 1. `node server.js` Start a ‘serving’ peer (receiving HTTP requests via Hyperswarm).
 2. `node client.js` Start a ‘requesting’ peer (sending HTTP requests and receiving responses, connecting to the server).
-3. `node proxy.js` Start a proxy that relays Hyperswarm protocol messages from a WebRTC stream into the Hyperswarm network.
-4. `npm run dev` Set your browser to `http://localhost:3000/`. The client will connect to the server via the WebRTC-Hyperswarm-proxy.
+3. `node proxy.js [<port>]` Start a proxy that relays Hyperswarm protocol messages from a WebSocket stream into the Hyperswarm network. `port` defaults to 4200.
+4. `npm run dev` Set your browser to `http://localhost:3000/`. The client will connect to the server via the WebSocket gateway.
 
 ## Related Work
 
